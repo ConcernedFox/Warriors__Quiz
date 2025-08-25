@@ -1,4 +1,5 @@
 import pgzrun
+import random
 
 WIDTH = 870
 HEIGHT = 650
@@ -30,7 +31,7 @@ Rectangle_8.move_ip(0,0)
 Rectangle_9 = Rect((175),(500),(300),(80))
 Rectangle_9.move_ip(0,0)
 
-Path_Name = r"\Users\puspendra\Pro Game Dev\questions.txt"
+Path_Name = "/Users/puspendra/Pro Game Dev/questions.txt"
 Score = 0
 Time_Left = 10
 
@@ -40,6 +41,7 @@ Game_Over = False
 Questions = []
 Question_Count = 0
 Question_Index = 0
+Answer_Box = [Rectangle_5, Rectangle_6, Rectangle_7, Rectangle_8, Rectangle_9]
 
 
 def draw():
@@ -58,6 +60,11 @@ def draw():
     screen.draw.textbox("Skip", Rectangle_4, color = "Black", angle = 90)
     screen.draw.textbox(str(Time_Left), Rectangle_3, color = "Black")
     screen.draw.textbox(str(Time_Left), Rectangle_3, color = "Black", shadow = (0.5,0.5),scolor = "Grey")
+    screen.draw.textbox(Question[0], Rectangle_2, color = "Black")
+    index = 1
+    for I in Answer_Box:
+        screen.draw.textbox(Question[index],I,color = "Black")
+        index = index + 1
 
 def update():
     move_display_box()
@@ -73,7 +80,25 @@ def update_time():
         Time_Left = Time_Left - 1
     else: 
         Game_Over = True
-        
+
+def Read_Question():
+    global Questions
+    global Question_Count
+    Question = open(Path_Name, "r")
+    for Q in Question:
+        Questions.append(Q)
+        Question_Count += 1
+    Question.close()
+
+def Read_Next_Question():
+    global Question_Index
+    random.shuffle(Questions)
+    Question_Index += 1
+    return Questions.pop(0).split(",")
+    
+Read_Question()
+Question = Read_Next_Question()
+
 clock.schedule_interval(update_time, (1))
 
 pgzrun.go()    
