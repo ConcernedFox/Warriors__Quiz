@@ -9,10 +9,10 @@ Rectangle_1.move_ip(0,0)
 Rectangle_2 = Rect((0),(50),(720),(80))
 Rectangle_2.move_ip(0,50)
 
-Rectangle_3 = Rect((755),(100),(80),(80)
+Rectangle_3 = Rect((755),(100),(80),(80))
 Rectangle_3.move_ip(0,0)
 
-Rectangle_4 = Rect((755),(200),(80),400)
+Rectangle_4 = Rect((755),(200),(80),(400))
 Rectangle_4.move_ip(0,0)
 
 Rectangle_5 = Rect((0),(200),(300),(80))
@@ -30,9 +30,10 @@ Rectangle_8.move_ip(0,0)
 Rectangle_9 = Rect((175),(500),(300),(80))
 Rectangle_9.move_ip(0,0)
 
+Path_Name = "/Users/puspendra/Pro Game Dev/other_questions.txt"
 Score = 0
-Time = 10
-Question_File = "/Users/puspendra/Pro Game Dev/other_questions.txt"
+Time_Left = 10
+
 Display = ""
 Game_Over = False
 
@@ -54,11 +55,25 @@ def draw():
     global Display
     Display = "Welcome to Quizmaster"
     screen.draw.textbox(Display, Rectangle_1, color = "Black")
+    screen.draw.textbox("Skip", Rectangle_4, color = "Black", angle = 90)
+    screen.draw.textbox(str(Time_Left), Rectangle_3, color = "Black")
+    screen.draw.textbox(str(Time_Left), Rectangle_3, color = "Black", shadow = (0.5,0.5),scolor = "Grey")
 
 def update():
     move_display_box()
 
 def move_display_box():
     Rectangle_1.x = Rectangle_1.x - 1
+    if Rectangle_1.right<0:
+        Rectangle_1.left = 870
+
+def update_time():
+    global Time_Left
+    if Time_Left > 0:
+        Time_Left = Time_Left - 1
+    else: 
+        Game_Over = True
+        
+clock.schedule_interval(update_time, (1))
 
 pgzrun.go()    
