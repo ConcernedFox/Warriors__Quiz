@@ -31,7 +31,7 @@ Rectangle_8.move_ip(0,0)
 Rectangle_9 = Rect((175),(500),(300),(80))
 Rectangle_9.move_ip(0,0)
 
-Path_Name = "/Users/puspendra/Pro Game Dev/questions.txt"
+Path_Name = "Users/puspendra/Pro Game Dev/questions.txt"
 Score = 0
 Time_Left = 10
 
