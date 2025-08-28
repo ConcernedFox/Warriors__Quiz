@@ -96,6 +96,29 @@ def Read_Next_Question():
     Question_Index += 1
     return Questions.pop(0).split(",")
     
+def on_mouse_down(pos):
+    index = 1
+    for A in Answer_Box:
+        if A.collidepoint(pos):
+            if index == int(Question[6]):
+                Correct_Answer()
+
+def Correct_Answer():
+    global score 
+    global Time_Left
+    score += 1
+    if Questions:
+        Question = Read_Next_Question()
+        Time_Left = 10
+    else:
+        Game_Over()
+
+def Game_Over():
+    global Time_Left
+    global Question
+    Question = ["Game Over"," "," "," "," "," "," " ]
+    Time_Left = 0
+
 Read_Question()
 Question = Read_Next_Question()
 
