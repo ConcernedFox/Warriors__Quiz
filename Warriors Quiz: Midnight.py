@@ -1,4 +1,5 @@
 import pgzrun
+import random
 
 WIDTH = 870
 HEIGHT = 650
@@ -12,13 +13,13 @@ Rectangle_2.move_ip(0,50)
 Rectangle_3 = Rect((755),(100),(80),(80))
 Rectangle_3.move_ip(0,0)
 
-Rectangle_4 = Rect((755),(200),(80),(400))
+Rectangle_4 = Rect((755),(765),(80),(400))
 Rectangle_4.move_ip(0,0)
 
 Rectangle_5 = Rect((0),(200),(300),(80))
 Rectangle_5.move_ip(0,0)
 
-Rectangle_6 = Rect((0),(350),(300),(80))
+Rectangle_6 = Rect((0),(250),(300),(80))
 Rectangle_6.move_ip(0,0)
 
 Rectangle_7 = Rect((350),(200),(300),(80))
@@ -30,7 +31,7 @@ Rectangle_8.move_ip(0,0)
 Rectangle_9 = Rect((175),(500),(300),(80))
 Rectangle_9.move_ip(0,0)
 
-Path_Name = "/Users/puspendra/Pro Game Dev/other_questions.txt"
+Path_Name = "Users/puspendra/Pro Game Dev/other_questions.txt"
 Score = 0
 Time_Left = 10
 
@@ -40,24 +41,30 @@ Game_Over = False
 Questions = []
 Question_Count = 0
 Question_Index = 0
+Answer_Box = [Rectangle_5,Rectangle_6,Rectangle_7,Rectangle_8,Rectangle_9]
 
 
 def draw():
-    screen.draw.filled_rect(Rectangle_1, "Green" )
-    screen.draw.filled_rect(Rectangle_2, "Green" )
-    screen.draw.filled_rect(Rectangle_3, "Green" )
-    screen.draw.filled_rect(Rectangle_4, "Green" )
-    screen.draw.filled_rect(Rectangle_5, "Green" )
-    screen.draw.filled_rect(Rectangle_6, "Green" )
-    screen.draw.filled_rect(Rectangle_7, "Green" )
-    screen.draw.filled_rect(Rectangle_8, "Green" )
-    screen.draw.filled_rect(Rectangle_9, "Green" )
+    screen.draw.filled_rect(Rectangle_1, Green)
+    screen.draw.filled_rect(Rectangle_2, Green)
+    screen.draw.filled_rect(Rectangle_3, Green)
+    screen.draw.filled_rect(Rectangle_4, Green)
+    screen.draw.filled_rect(Rectangle_5, Green)
+    screen.draw.filled_rect(Rectangle_6, Green)
+    screen.draw.filled_rect(Rectangle_7, Green)
+    screen.draw.filled_rect(Rectangle_8, Green)
+    screen.draw.filled_rect(Rectangle_9, Green)
     global Display
     Display = "Welcome to Quizmaster"
     screen.draw.textbox(Display, Rectangle_1, color = "Black")
     screen.draw.textbox("Skip", Rectangle_4, color = "Black", angle = 90)
     screen.draw.textbox(str(Time_Left), Rectangle_3, color = "Black")
     screen.draw.textbox(str(Time_Left), Rectangle_3, color = "Black", shadow = (0.5,0.5),scolor = "Grey")
+    screen.draw.textbox(Question[0], Rectangle_2, color = "Black")
+    index = 1
+    for i in Answer_Box:
+        screen.draw.textbox(Question[index],I,color = "Black")
+        index = index + 1
 
 def update():
     move_display_box()
@@ -71,9 +78,50 @@ def update_time():
     global Time_Left
     if Time_Left > 0:
         Time_Left = Time_Left - 1
-    else: 
+    else:
         Game_Over = True
-        
+
+def Read_Question():
+    global Questions
+    global Question_Count
+    Question = open(Path_Name,"r")
+    for Q in Question:
+        Questions.append
+        Question_Count += 1
+    Question.close
+
+def Read_Next_Question():
+    global Question_Index
+    random.shuffle(Questions)
+    Question_Index += 1
+    return Questions.pop(0).split("")
+
+def on_mouse_down():
+    index = 1
+    for A in Answer_Box:
+        if A.collidepoint(pos):
+            if index == int(Question(6)):
+                Correct_Answer()
+            
+def Correct_Answer():
+    global Score
+    global Time_Left
+    score +=1
+    if Questions():
+        Question = Read_Next_Question()
+        Time_Left = 10
+    else:
+        Game_Over()
+
+def Game_Over():
+    global Time_Left
+    global Question
+    Question = ["Game Over"," "," "," "," "," "," " ]
+    Time_Left = 0
+
+Read_Question()
+Question = Read_Next_Question()
+
 clock.schedule_interval(update_time, (1))
 
-pgzrun.go()    
+pgzrun.go()
