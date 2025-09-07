@@ -1,5 +1,6 @@
 import pgzrun
 import random
+import os
 
 WIDTH = 870
 HEIGHT = 650
@@ -31,8 +32,9 @@ Rectangle_8.move_ip(0,0)
 Rectangle_9 = Rect((175),(500),(300),(80))
 Rectangle_9.move_ip(0,0)
 
-Path_Name = "Users/puspendra/Pro Game Dev/questions.txt"
-Score = 0
+Path_Name = "/Users/puspendra/Pro Game Dev/questions.txt"
+print(os.path.exists(Path_Name))
+score = 0
 Time_Left = 10
 
 Display = ""
@@ -102,10 +104,14 @@ def on_mouse_down(pos):
         if A.collidepoint(pos):
             if index == int(Question[6]):
                 Correct_Answer()
+        index += 1
+    if Rectangle_3.collidepoint(pos):
+        Skip()
 
 def Correct_Answer():
     global score 
     global Time_Left
+    global Question
     score += 1
     if Questions:
         Question = Read_Next_Question()
@@ -118,6 +124,15 @@ def Game_Over():
     global Question
     Question = ["Game Over"," "," "," "," "," "," " ]
     Time_Left = 0
+
+def Skip():
+    global Question
+    global Time_Left
+    if Questions:
+        Question = Read_Next_Question()
+        Time_Left = 10
+    else:
+        Game_Over()
 
 Read_Question()
 Question = Read_Next_Question()
